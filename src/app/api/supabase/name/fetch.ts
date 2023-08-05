@@ -2,7 +2,7 @@ import { apiUrl } from "@/const/apiUrl";
 
 export const fetchSupabaseName = async () => {
   const fetchResponse = await fetch(`${apiUrl()}/supabase/name`, {
-    next: { tags: ["revalidate_tag"] },
+    next: { tags: ["supabase-name"] },
   });
 
   if (fetchResponse.status !== 200) {

@@ -1,15 +1,13 @@
-import { apiUrl } from "@/const/apiUrl";
+import { getSupabase } from "@/libs/supabase-client";
 
 export const fetchSupabaseName = async () => {
-  const fetchResponse = await fetch(`${apiUrl()}/supabase/name`, {
-    next: { tags: ["supabase-name"] },
-  });
+  const { data, error } = await getSupabase(
+    ["supabase-name"] // revalidateTag
+  )
+    .from("score")
+    .select("*");
 
-  if (fetchResponse.status !== 200) {
-    return { data: [], date: Date.now() };
-  }
+  if (!data) return { data: [], date: Date.now() };
 
-  const { data, now } = await fetchResponse.json();
-
-  return { data: data, date: now };
+  return { data: data, date: Date.now() };
 };
